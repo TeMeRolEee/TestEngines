@@ -5,14 +5,8 @@
 class Engine {
 
 public:
-    Engine();
-
     bool getMood();
-
-private:
-    bool mood = false;
-
-    QJsonObject result;
+    int counter = 0;
 };
 
 

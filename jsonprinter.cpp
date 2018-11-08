@@ -5,32 +5,33 @@
 #include <QtCore/QJsonArray>
 #include <QtCore/QJsonDocument>
 #include <QtCore/QFileInfo>
+#include <QDebug>
 
 JsonPrinter::JsonPrinter() {
 	jsonObject = new QJsonObject();
+	jsonArray = new QJsonArray();
 }
 
 JsonPrinter::~JsonPrinter() {
 	delete jsonObject;
+	delete jsonArray;
 }
 
-void JsonPrinter::addResultScan(const QString &filename, int result, const QString &description) {
+void JsonPrinter::addScanResult(const QString &filename, int result, const QString &description) {
 	QFile file(filename);
 	QFileInfo fileInfo(file.fileName());
 
-	QJsonArray resultArray;
-	QJsonObject newResult;
+	auto *newResult = new QJsonObject;
 
-	newResult.insert("filename", fileInfo.fileName());
-	newResult.insert("verdict", result);
-	newResult.insert("description", description);
+	newResult->insert("filename", fileInfo.fileName());
+	newResult->insert("verdict", result);
+	newResult->insert("description", description);
 
-	resultArray.push_back(newResult);
-
-	jsonObject->insert("scan_result", resultArray);
+	jsonArray->push_back(*newResult);
 }
 
 void JsonPrinter::printResult() {
+	jsonObject->insert("scan_result", *jsonArray);
 	std::cout << QJsonDocument(*jsonObject).toJson().toStdString();
 }
 
