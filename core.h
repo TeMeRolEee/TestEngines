@@ -9,6 +9,10 @@ public:
 
     ~Core();
 
+	int folderScanner(const QString &directoryPath);
+
+	int scanFile(const QString &filePath);
+
 private:
     Engine *engine;
 };

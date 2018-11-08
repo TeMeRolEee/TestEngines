@@ -12,3 +12,7 @@ Engine::Engine() {
 
     mood = moodNumber % 2 == 0;
 }
+
+bool Engine::getMood() {
+    return mood;
+}

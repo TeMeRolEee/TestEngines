@@ -8,7 +8,7 @@ set(CMAKE_AUTOMOC ON)
 
 find_package(Qt5Core HINTS ~/Qt/5.11.1/gcc_64/)
 
-add_executable(TestEngines main.cpp core.cpp engine.cpp)
+add_executable(TestEngines main.cpp core.cpp engine.cpp jsonprinter.cpp jsonprinter.h)
 
 # linking
 target_link_libraries(TestEngines Qt5::Core)
