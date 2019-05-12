@@ -32,7 +32,7 @@ void JsonPrinter::addScanResult(const QString &filename, int result, const QStri
 
 void JsonPrinter::printResult() {
 	jsonObject->insert("scan_result", *jsonArray);
-	std::cout << QJsonDocument(*jsonObject).toJson().toStdString();
+	std::cout << QJsonDocument(*jsonObject).toJson(QJsonDocument::Compact).toStdString();
 }
 
 
