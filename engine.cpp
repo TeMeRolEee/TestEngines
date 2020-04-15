@@ -5,15 +5,15 @@
 #include "engine.h"
 
 bool Engine::getMood() {
-    bool mood;
-    QRandomGenerator generator;
+	bool mood;
+	QRandomGenerator generator;
 
-    auto seedNumber = static_cast<quint32>(QDateTime::currentMSecsSinceEpoch() + counter++);
-    generator.seed(seedNumber);
+	auto seedNumber = static_cast<quint32>(QDateTime::currentMSecsSinceEpoch() + counter++);
+	generator.seed(seedNumber);
 
-    int moodNumber = generator.bounded(1,9999999);
+	int moodNumber = generator.bounded(1, 9999999);
 
-    mood = moodNumber % 2 == 0;
+	mood = moodNumber % 2 == 0;
 
-    return mood;
+	return mood;
 }

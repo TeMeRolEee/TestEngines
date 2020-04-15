@@ -37,9 +37,9 @@ int Core::folderScanner(const QString &directoryPath) {
 
 		for (int i = 0; i < fileNameList.size(); i++) {
 			if (engine->getMood()) {
-                printer->addScanResult(fileNameList.at(i), 0, "No threat detected");
+				printer->addScanResult(fileNameList.at(i), 0, "No threat detected");
 			} else {
-                printer->addScanResult(fileNameList.at(i), 1, "Blocked");
+				printer->addScanResult(fileNameList.at(i), 1, "Blocked");
 			}
 		}
 
@@ -54,28 +54,28 @@ int Core::folderScanner(const QString &directoryPath) {
 }
 
 int Core::scanFile(const QString &filePath) {
-    auto *printer = new JsonPrinter();
-    QFile qFile(filePath);
+	auto *printer = new JsonPrinter();
+	QFile qFile(filePath);
 
-    if(!filePath.isEmpty() && qFile.exists()) {
+	if (!filePath.isEmpty() && qFile.exists()) {
 
 
-        if (engine->getMood()) {
-            printer->addScanResult(qFile.fileName(), 0, "No threat detected");
-        } else {
-            printer->addScanResult(qFile.fileName(), 1, "Blocked");
-        }
+		if (engine->getMood()) {
+			printer->addScanResult(qFile.fileName(), 0, "No threat detected");
+		} else {
+			printer->addScanResult(qFile.fileName(), 1, "Blocked");
+		}
 
-        printer->printResult();
+		printer->printResult();
 
-        delete printer;
+		delete printer;
 
-        return 0;
-    }
+		return 0;
+	}
 
-    printer->addScanResult(qFile.fileName(), -1, "File not found");
+	printer->addScanResult(qFile.fileName(), -1, "File not found");
 
-    printer->printResult();
+	printer->printResult();
 
 	return 1;
 }

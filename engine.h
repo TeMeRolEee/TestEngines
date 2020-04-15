@@ -5,8 +5,9 @@
 class Engine {
 
 public:
-    bool getMood();
-    int counter = 0;
+	bool getMood();
+
+	int counter = 0;
 };
 
 
