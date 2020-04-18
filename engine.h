@@ -9,5 +9,3 @@ public:
 
 	int counter = 0;
 };
-
-

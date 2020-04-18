@@ -8,13 +8,16 @@
 
 Core::Core() {
 	engine = new Engine();
+	connect(this, &Core::finished, this, &Core::deleteLater);
+	connect(this, &Core::initiateScanFile_signal, this, &Core::scanFile_slot, Qt::QueuedConnection);
+	connect(this, &Core::initiateFolderScan_signal, this, &Core::folderScanner_slot, Qt::QueuedConnection);
 }
 
 Core::~Core() {
 	delete engine;
 }
 
-int Core::folderScanner(const QString &directoryPath) {
+int Core::folderScanner_slot(const QString &directoryPath, QJsonObject *result, bool *isDone) {
 
 	if (!directoryPath.isEmpty()) {
 		QDirIterator directoryIterator(directoryPath);
@@ -53,12 +56,11 @@ int Core::folderScanner(const QString &directoryPath) {
 	return 1;
 }
 
-int Core::scanFile(const QString &filePath) {
+void Core::scanFile_slot(const QString &filePath, QJsonObject *result, bool *isDone) {
 	auto *printer = new JsonPrinter();
 	QFile qFile(filePath);
 
 	if (!filePath.isEmpty() && qFile.exists()) {
-
 
 		if (engine->getMood()) {
 			printer->addScanResult(qFile.fileName(), 0, "No threat detected");
@@ -66,16 +68,12 @@ int Core::scanFile(const QString &filePath) {
 			printer->addScanResult(qFile.fileName(), 1, "Blocked");
 		}
 
-		printer->printResult();
-
-		delete printer;
-
-		return 0;
+	} else {
+		printer->addScanResult(qFile.fileName(), -1, "File not found");
 	}
 
-	printer->addScanResult(qFile.fileName(), -1, "File not found");
+	result = new QJsonObject(printer->getResultObject());
+	delete printer;
 
-	printer->printResult();
-
-	return 1;
+	*isDone = true;
 }

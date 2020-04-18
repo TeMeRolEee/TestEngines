@@ -13,6 +13,8 @@ public:
 
 	void printResult();
 
+	QJsonObject getResultObject();
+
 private:
 	QJsonObject *jsonObject;
 	QJsonArray *jsonArray;
