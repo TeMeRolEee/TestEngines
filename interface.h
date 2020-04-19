@@ -3,11 +3,14 @@
 #include <QtCore/QString>
 #include <QtCore/QJsonObject>
 
+#ifdef Q_OS_WIN
 #define EXPORT __declspec( dllexport )
+#else
+#define EXPORT
+#endif
 
 #ifdef __cplusplus
-extern "C" {  // only need to export C interface if
-// used by C++ source code
+extern "C" {
 
 EXPORT bool init();
 EXPORT void deInit();
