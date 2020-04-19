@@ -2,6 +2,9 @@
 
 #include <chrono>
 #include <thread>
+#include <iostream>
+
+#include <QtCore/QJsonDocument>
 
 #include "core.h"
 

@@ -9,7 +9,7 @@
 Core::Core() {
 	engine = new Engine();
 	connect(this, &Core::finished, this, &Core::deleteLater);
-	connect(this, &Core::initiateScanFile_signal, this, &Core::scanFile_slot, Qt::QueuedConnection);
+	connect(this, &Core::initiateScanFile_signal, this, &Core::scanFile_slot, Qt::DirectConnection);
 	connect(this, &Core::initiateFolderScan_signal, this, &Core::folderScanner_slot, Qt::QueuedConnection);
 }
 
@@ -72,7 +72,9 @@ void Core::scanFile_slot(const QString &filePath, QJsonObject *result, bool *isD
 		printer->addScanResult(qFile.fileName(), -1, "File not found");
 	}
 
-	result = new QJsonObject(printer->getResultObject());
+	printer->printResult();
+
+	*result = printer->getResultObject();
 	delete printer;
 
 	*isDone = true;
